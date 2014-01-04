@@ -1,4 +1,4 @@
-tasty是一个帮助你构建推荐系统的工具包，目前特性，测试都不完善，不能用于生产环境，可以用于推荐系统入门学习
+tasty是一个帮助你构建推荐系统的工具包，目前特性，测试都不完善，不能用于生产环境。但可以用于推荐系统入门学习
 
 tasty采用了对商业友好的[Apache License v2](/LICENSE)发布
 
@@ -11,7 +11,7 @@ tasty现实了协同过滤推荐算法，目前包括：
 
 # 使用
 
-tasty参考了Mahout的接口设计，使用方法和Mahout比较相似。
+tasty参考了[Mahout](http://mahout.apache.org)的接口设计，使用方法和[Mahout](http://mahout.apache.org)比较相似。
 
 下面是一个基于项目协同过滤的例子
 
@@ -30,10 +30,11 @@ func main() {
         p := model.NewGenericPreference(userId, itemId, value)
         m.AddPreference(p)
     }
-    // A用户喜欢物品A,C
-    // B用户喜欢物品A,B,C
-    // C用户喜欢物品A
-    // 将C物品推荐给用户C
+    // A用户喜欢物品a,c
+    // B用户喜欢物品a,b,c
+    // C用户喜欢物品a
+    // 物品a,c同时被用户喜欢，说明物品a,c的相似度很高
+    // C用户喜欢a物品，则可以将c物品推荐给用户C
     add(1, 1, 5.0)
     add(1, 3, 4.0)
     add(2, 1, 4.0)
