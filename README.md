@@ -2,12 +2,16 @@ tasty是一个帮助你构建推荐系统的工具包，目前特性，测试都
 
 tasty采用了对商业友好的[Apache License v2](/LICENSE)发布
 
-tasty现实了协同过滤推荐算法，目前包括：
+tasty目前实现了最基本的协同过滤推荐算法，目前包括：
 
 1. 基于用户的协同过滤
 2. 基于项目的协同过滤
 
-相似度算法目前仅实现了皮尔逊相关系数，后续会不断完善
+相似度算法目前仅实现了皮尔逊相关系数，后续会不断完善，如：
+
+1. 欧几里德距离
+2. 余弦相似度
+3. Tanimoto系数
 
 # 使用
 
@@ -19,6 +23,7 @@ tasty参考了[Mahout](http://mahout.apache.org)的接口设计，使用方法�
 package main
 
 import (
+    "fmt"
     "github.com/lilee/tasty/cf/model"
     "github.com/lilee/tasty/cf/recomender"
     "github.com/lilee/tasty/cf/similarity"
@@ -47,13 +52,26 @@ func main() {
     r := recommender.NewGenericItemBasedRecommender(m, s)
     items, err := r.Recommend(3, 1)
     if err != nil {
-        log.Fatal(err)
+        panic(err)
     }
     for _, item := range(items) {
-        log.Println("item:", item)
+        fmt.Println("item:", item)
     }
+
+    //Output:
+    // item: (3, 5.000000)
 }
 ```
+
+- DataModel提供了存储及访问用户偏好的接口
+- Similarity实现了计算两个用户相似度的方法
+- Recommender使用上面两个模块向指定用户提供TopN推荐
+
+程序运行输出是：
+
+    item: (3, 5.000000)
+
+表示将推荐物品c，并且系统预测用户C对物品c的可能评分是5分
 
 # TODO
 
